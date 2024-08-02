@@ -73,3 +73,6 @@ crashlytics-build.properties
 
 # Ignore assets
 /Assets/Objects/*
+
+# macOS General
+.DS_Store
