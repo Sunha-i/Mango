@@ -50,14 +50,14 @@ public class Movement3rdPerson : MonoBehaviour
                 //switch to third person cam
                 cam1.Priority = 1;
                 cam2.Priority = 0;
-                playerPSHRef.gameObject.SetActive(true);
+                //playerPSHRef.gameObject.SetActive(true);
             }
             else
             {
                 //switch to first person cam
                 cam1.Priority = 0;
                 cam2.Priority = 1;
-                playerPSHRef.gameObject.SetActive(false);
+                //playerPSHRef.gameObject.SetActive(false);
             }
         }
 

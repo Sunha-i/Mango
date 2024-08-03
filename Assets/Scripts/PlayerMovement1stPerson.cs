@@ -13,7 +13,7 @@ public class PlayerMovement1stPerson : MonoBehaviour
     public LayerMask groundMask; //collision 확인
 
     private Vector3 velocity;
-    private bool isGrounded; //캐릭터가 vertical motion이 있는지 없는지 확인
+    private bool isGrounded; //캐릭터가 vertical motion이 있는지 없는지 확인 */
     
     // Start is called before the first frame update
     void Start()
@@ -38,7 +38,7 @@ public class PlayerMovement1stPerson : MonoBehaviour
         }
 
         velocity.y += gravity * Time.deltaTime; //if character is not colliding with anything(in the air)
-        controller.Move(velocity*Time.deltaTime);
+        controller.Move(velocity * Time.deltaTime);
 
         //Movement
         float moveLR = Input.GetAxis("Horizontal"); 
