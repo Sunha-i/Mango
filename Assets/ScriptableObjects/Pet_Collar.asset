@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60261a739557e9e42b83e69293b2c928, type: 3}
-  m_Name: Test Item 2
+  m_Name: Pet_Collar
   m_EditorClassIdentifier: 
   ID: 0
-  DisplayName: Test Item 2
-  Description: This is another test item.
-  Icon: {fileID: 0}
-  MaxStackSize: 1
+  DisplayName: Pet_Collar
+  Description: This is a Pet Collar.
+  Icon: {fileID: 1749469222, guid: f0ac11d4481fcf0488eda6ec03837959, type: 3}
+  MaxStackSize: 5
