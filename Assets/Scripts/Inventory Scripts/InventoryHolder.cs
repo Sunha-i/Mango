@@ -7,13 +7,13 @@ using UnityEngine.Events;
 public class InventoryHolder : MonoBehaviour
 {
     [SerializeField] private int inventorySize;
-    [SerializeField] protected InventorySystem inventorySystem; //inventoryholder는 하나의 inventorysystem을 가짐
+    [SerializeField] protected InventorySystem inventorysystem; //inventoryholder는 하나의 inventorysystem을 가짐
 
-    public InventorySystem InventorySystem => inventorySystem;
+    public InventorySystem InventorySystem => inventorysystem;
     public static UnityAction<InventorySystem> OnDynamicInventoryDisplayRequested;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
-        inventorySystem = new InventorySystem(inventorySize);
+        inventorysystem = new InventorySystem(inventorySize);
     }
 }
