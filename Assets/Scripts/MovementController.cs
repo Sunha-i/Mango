@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MovementController : MonoBehaviour
 {
@@ -11,7 +12,13 @@ public class MovementController : MonoBehaviour
     public LayerMask groundLayer;
 
     private Rigidbody rb;
-    private Vector3 direction;
+
+    private PlayerInputActions playerControls;
+
+    private void Awake()
+    {
+        playerControls = new PlayerInputActions();
+    }
 
     void Start()
     {
@@ -20,11 +27,13 @@ public class MovementController : MonoBehaviour
 
     void Update()
     {
-        direction = Input.GetAxisRaw("Horizontal") * head.right + Input.GetAxisRaw("Vertical") * head.forward;
+        Vector2 move = playerControls.Player.Move.ReadValue<Vector2>();
+
+        Vector3 direction = move.x * head.right + move.y * head.forward;
         rb.velocity = Vector3.Lerp(rb.velocity, direction.normalized * playerSpeed 
             + rb.velocity.y * Vector3.up, playerAcceleration * Time.deltaTime);
         
-        if (Input.GetButtonDown("Jump") && isTouchingGround())
+        if (playerControls.Player.Jump.triggered && isTouchingGround())
         {
             rb.velocity += jumpForce * Vector3.up;
         }
@@ -33,5 +42,15 @@ public class MovementController : MonoBehaviour
     private bool isTouchingGround()
     {
         return Physics.CheckBox(transform.position, new Vector3(0.1f, 0.1f, 0.1f), Quaternion.identity, groundLayer);
+    }
+
+    private void OnEnable()
+    {
+        playerControls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        playerControls.Disable();
     }
 }

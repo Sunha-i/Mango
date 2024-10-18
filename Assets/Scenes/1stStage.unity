@@ -3082,7 +3082,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 682453370}
   hand: {fileID: 1695909688}
-  cameraSensitivity: 200
+  cameraSensitivity: 10
   cameraAcceleration: 5
 --- !u!4 &682453369 stripped
 Transform:
