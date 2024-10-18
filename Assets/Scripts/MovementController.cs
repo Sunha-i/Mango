@@ -44,12 +44,12 @@ public class MovementController : MonoBehaviour
         return Physics.CheckBox(transform.position, new Vector3(0.1f, 0.1f, 0.1f), Quaternion.identity, groundLayer);
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         playerControls.Enable();
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         playerControls.Disable();
     }

@@ -38,12 +38,12 @@ public class CameraController : MonoBehaviour
             Quaternion.Euler(-rotation_x_axis, 0, 0), cameraAcceleration * Time.deltaTime);
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         playerControls.Enable();
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         playerControls.Disable();
     }
