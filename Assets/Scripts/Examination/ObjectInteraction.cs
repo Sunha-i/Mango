@@ -11,6 +11,7 @@ public class ObjectInteraction : MonoBehaviour
     Examinable currentInteractable;
 
     public GameObject offset;
+    public GameObject zoomoffset;
     public bool isExamining = false;
     public bool isInteracting = false;
     private Vector3 lastMousePosition;
@@ -33,7 +34,7 @@ public class ObjectInteraction : MonoBehaviour
     void Update()
     {
         CheckInteraction();
-        if (Input.GetKeyDown(KeyCode.E) && currentInteractable != null)
+        if (Input.GetKeyDown(KeyCode.F) && currentInteractable != null)
         {
             string objectTag = currentInteractable.gameObject.tag;
             if (objectTag == "Examinable")
@@ -64,6 +65,11 @@ public class ObjectInteraction : MonoBehaviour
         {
             _canvas.enabled = false;
             Examine(); StartExamination();
+        }
+        else if (isInteracting)
+        {
+            _canvas.enabled = false;
+            ZoomIn(); StartExamination();
         }
         else
         {
@@ -161,6 +167,15 @@ public class ObjectInteraction : MonoBehaviour
             examinedObject.Rotate(deltaMouse.x * rotationSpeed * Vector3.up, Space.World);
             examinedObject.Rotate(deltaMouse.y * rotationSpeed * Vector3.left, Space.World);
             lastMousePosition = Input.mousePosition;
+        }
+    }
+
+    void ZoomIn()
+    {
+        if (examinedObject != null)
+        {
+            examinedObject.position = Vector3.Lerp(examinedObject.position, zoomoffset.transform.position, 0.2f);
+            examinedObject.rotation = Quaternion.Slerp(examinedObject.rotation, zoomoffset.transform.rotation, 0.2f);
         }
     }
 
