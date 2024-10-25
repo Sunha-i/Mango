@@ -15,4 +15,4 @@ MonoBehaviour:
   id: 3
   itemName: Needle
   value: 2
-  icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: 48a03a0f0bcf0b74ba92d28e9ec16861, type: 3}
