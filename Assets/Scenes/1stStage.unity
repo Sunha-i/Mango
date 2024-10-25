@@ -1732,6 +1732,23 @@ MonoBehaviour:
   isExamining: 0
   isInteracting: 0
   _canvas: {fileID: 457105728}
+--- !u!114 &245427265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245427259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a18239f74f0d2da49b82e2243f7cce6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredItems:
+  - Button
+  - Dog
+  - Needle
+  sceneToLoad: 2ndStage
 --- !u!1001 &265969969
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3045,6 +3062,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 245427264}
+    - targetCorrespondingSourceObject: {fileID: 8438527580089388155, guid: d795b87fa94b905469daaebba2dc1819,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 245427265}
     - targetCorrespondingSourceObject: {fileID: 6900275238488720908, guid: d795b87fa94b905469daaebba2dc1819,
         type: 3}
       insertIndex: -1
@@ -9917,8 +9938,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5592896, y: 2.5647912, z: 1}
-  m_Center: {x: -0.22035523, y: 0.7823952, z: 0}
+  m_Size: {x: 0.3106385, y: 2.5647912, z: 1.1809708}
+  m_Center: {x: -0.07750171, y: 0.7823952, z: -0.09048505}
 --- !u!114 &2011082069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9931,6 +9952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3423473a070c414ab3c73727e3d965c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemCollector: {fileID: 245427265}
 --- !u!1 &2083906167
 GameObject:
   m_ObjectHideFlags: 0
