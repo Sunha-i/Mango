@@ -40,7 +40,8 @@ public class TaskPatrol : Node
         else
         {
             Transform wp = _waypoints[_currentWaypointIndex];
-            if (Vector3.Distance(_transform.position, wp.position) < 0.05f)
+            if (Vector3.Distance(new Vector3(_transform.position.x, 0, _transform.position.z),
+                     new Vector3(wp.position.x, 0, wp.position.z)) < 0.05f)
             {
                 _agent.isStopped = true;
                 _waitCounter = 0f;
