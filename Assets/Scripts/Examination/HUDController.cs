@@ -16,7 +16,7 @@ public class HUDController : MonoBehaviour
 
     public void EnableExaminationText(string text)
     {
-        interactionText.text = text + " (F)";
+        interactionText.text = text + " F";
         interactionText.gameObject.SetActive(true);
     }
     public void DisableExaminableText()
