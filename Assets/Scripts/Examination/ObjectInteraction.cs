@@ -23,12 +23,20 @@ public class ObjectInteraction : MonoBehaviour
 
     private MovementController _moveControls;
     private CameraController _cameraControls;
-    public Canvas _canvas;
+    
+    public Canvas canvas;
+    private GameObject _playerHUD;
+    private GameObject _lockGuideHUD;
+    private GameObject _putbackHUD;
 
     void Start()
     {
         _moveControls = GetComponent<MovementController>();
         _cameraControls = GetComponentInChildren<CameraController>();
+
+        _playerHUD = canvas.transform.Find("PlayerHUD").gameObject;
+        _lockGuideHUD = canvas.transform.Find("LockGuideHUD").gameObject;
+        _putbackHUD = canvas.transform.Find("PutbackHUD").gameObject;
     }
 
     void Update()
@@ -63,17 +71,22 @@ public class ObjectInteraction : MonoBehaviour
         }
         if (isExamining)
         {
-            _canvas.enabled = false;
+            _playerHUD.SetActive(false);
+            _putbackHUD.SetActive(true);
             Examine(); StartExamination();
         }
         else if (isInteracting)
         {
-            _canvas.enabled = false;
+            _playerHUD.SetActive(false);
+            _lockGuideHUD.SetActive(true);
+            _putbackHUD.SetActive(true);
             ZoomIn(); StartExamination();
         }
         else
         {
-            _canvas.enabled = true;
+            _playerHUD.SetActive(true);
+            _lockGuideHUD.SetActive(false);
+            _putbackHUD.SetActive(false);
             NonExamine(); StopExamination();
         }
 
