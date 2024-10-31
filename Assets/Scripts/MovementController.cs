@@ -8,7 +8,7 @@ public class MovementController : MonoBehaviour
     public Transform head;
     public float playerSpeed = 5.0f;
     public float playerAcceleration = 2.0f;
-    public float jumpForce = 6.0f;
+    public float jumpForce = 5.0f;
     public LayerMask groundLayer;
 
     private Rigidbody rb;
@@ -33,7 +33,7 @@ public class MovementController : MonoBehaviour
         rb.velocity = Vector3.Lerp(rb.velocity, direction.normalized * playerSpeed 
             + rb.velocity.y * Vector3.up, playerAcceleration * Time.deltaTime);
         
-        if (playerControls.Player.Jump.triggered && isTouchingGround())
+        if (playerControls.Player.Jump.triggered)
         {
             rb.velocity += jumpForce * Vector3.up;
         }
