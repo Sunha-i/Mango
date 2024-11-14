@@ -175,11 +175,14 @@ public class ObjectInteraction : MonoBehaviour
         {
             examinedObject.position = Vector3.Lerp(examinedObject.position, offset.transform.position, 0.2f);
 
-            Vector3 deltaMouse = Input.mousePosition - lastMousePosition;
-            float rotationSpeed = 1.0f;
-            examinedObject.Rotate(deltaMouse.x * rotationSpeed * Vector3.up, Space.World);
-            examinedObject.Rotate(deltaMouse.y * rotationSpeed * Vector3.left, Space.World);
-            lastMousePosition = Input.mousePosition;
+            if (!CursorManager.isPaused)
+            {
+                Vector3 deltaMouse = Input.mousePosition - lastMousePosition;
+                float rotationSpeed = 1.0f;
+                examinedObject.Rotate(deltaMouse.x * rotationSpeed * Vector3.up, Space.World);
+                examinedObject.Rotate(deltaMouse.y * rotationSpeed * Vector3.left, Space.World);
+                lastMousePosition = Input.mousePosition;
+            }
         }
     }
 
@@ -217,11 +220,9 @@ public class ObjectInteraction : MonoBehaviour
     void StartExamination()
     {
         lastMousePosition = Input.mousePosition;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
         _moveControls.OnDisable();
         _cameraControls.OnDisable();
+        CursorManager.SetExaminationState(true);
     }
 
     //This method is called when the player stops examining an object. It locks the cursor again,
@@ -229,10 +230,8 @@ public class ObjectInteraction : MonoBehaviour
 
     void StopExamination()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
         _moveControls.OnEnable();
         _cameraControls.OnEnable();
+        CursorManager.SetExaminationState(false);
     }
 }
