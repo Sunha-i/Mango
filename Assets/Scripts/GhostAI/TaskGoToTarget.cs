@@ -9,11 +9,13 @@ public class TaskGoToTarget : Node
 {
     private Transform _transform;
     private NavMeshAgent _agent;
+    private float _stopDistance = 1.5f;
 
     public TaskGoToTarget(Transform transform)
     {
         _transform = transform;
         _agent = transform.GetComponent<NavMeshAgent>();
+        _agent.stoppingDistance = _stopDistance;
     }
 
     public override NodeState Evaluate()
@@ -23,7 +25,8 @@ public class TaskGoToTarget : Node
         Vector3 targetPosition = new Vector3(target.position.x, _transform.position.y, target.position.z);
         float stopDistance = 1f;
 
-        if (Vector3.Distance(_transform.position, targetPosition) > stopDistance)
+        float distanceToTarget = Vector3.Distance(_transform.position, targetPosition);
+        if (distanceToTarget > _stopDistance)
         {
             Vector3 direction = (targetPosition - _transform.position).normalized;
             direction.y = 0;

@@ -24,6 +24,7 @@ public class TaskPatrol : Node
         _waypoints = waypoints;
         _animator = transform.GetComponentInChildren<Animator>();
         _agent = transform.GetComponent<NavMeshAgent>();
+        _agent.updateRotation = false;
     }
 
     public override NodeState Evaluate()
@@ -40,32 +41,47 @@ public class TaskPatrol : Node
         else
         {
             Transform wp = _waypoints[_currentWaypointIndex];
-            if (Vector3.Distance(new Vector3(_transform.position.x, 0, _transform.position.z),
-                     new Vector3(wp.position.x, 0, wp.position.z)) < 0.05f)
-            {
-                _agent.isStopped = true;
-                _waitCounter = 0f;
-                _waiting = true;
+            Vector3 agentPositionXZ = new Vector3(_transform.position.x, 0, _transform.position.z);
+            Vector3 waypointPositionXZ = new Vector3(wp.position.x, 0, wp.position.z);
+            float distanceToWaypoint = Vector3.Distance(agentPositionXZ, waypointPositionXZ);
 
-                _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
-                _animator.SetBool("Flying", false);
-            }
-            else
+            // Move towards the waypoints
+            if (!_waiting)
             {
-                // Calculate direction using agent velocity
-                Vector3 direction = _agent.velocity.normalized;
-                direction.y = 0;
-                if (_agent.velocity != Vector3.zero)
-                {
-                    Quaternion targetRotation = Quaternion.LookRotation(-direction);    // Reverse the direction to face the target
-                    _transform.rotation = Quaternion.Slerp(_transform.rotation, targetRotation, Time.deltaTime * 5.0f);
-                }
-
-                // Move towards the waypoints
                 _agent.isStopped = false;
                 _agent.SetDestination(wp.position);
-                
-                _animator.SetBool("Flying", true);
+            }
+
+            if (!_agent.pathPending && _agent.hasPath)
+            {
+                if (_agent.remainingDistance <= _agent.stoppingDistance 
+                    || Vector3.Distance(new Vector3(_transform.position.x, 0, _transform.position.z),
+                    new Vector3(wp.position.x, 0, wp.position.z)) < 0.05f)
+                {
+                    _agent.isStopped = true;
+                    _waitCounter = 0f;
+                    _waiting = true;
+
+                    _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
+                    _animator.SetBool("Flying", false);
+                }
+                else
+                {
+                    // Calculate direction using agent velocity
+                    Vector3 direction = (_agent.steeringTarget - _transform.position).normalized;
+                    direction.y = 0;
+                    if (_agent.velocity != Vector3.zero)
+                    {
+                        Debug.DrawRay(_transform.position, -direction * 2.0f, Color.red, 1.0f);
+
+                        Quaternion targetRotation = Quaternion.LookRotation(-direction, Vector3.up);    // Reverse the direction to face the target
+                        _transform.rotation = Quaternion.Slerp(_transform.rotation, targetRotation, Time.deltaTime * 5.0f);
+
+                        //_transform.forward = -direction;
+                    }
+
+                    _animator.SetBool("Flying", true);
+                }
             }
         }
 

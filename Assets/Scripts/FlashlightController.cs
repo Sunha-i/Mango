@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,13 +16,15 @@ public class FlashlightController : MonoBehaviour
     public int attackOuterAngle = 50;
 
     public float transitionSpeed = 5f;
-    public float attackEffectDuration = 0.3f; // 공격 판정 발생 시 outer angle 유지 시간
-    public float cooldownTime = 2f; // 쿨다운 시간
+    public float attackEffectDuration = 0.3f;
+    public float cooldownTime = 2f;
 
     private bool isAttackMode = false;
     private bool isCooldown = false;
     private float targetOuterAngle;
     private float targetInnerAngle;
+
+    public event Action<Transform> LightHitEvent;
 
     private void Start()
     {
@@ -41,7 +44,7 @@ public class FlashlightController : MonoBehaviour
         flashlight.spotAngle = Mathf.Lerp(flashlight.spotAngle, targetOuterAngle, Time.deltaTime * transitionSpeed);
         flashlight.innerSpotAngle = Mathf.Lerp(flashlight.innerSpotAngle, targetInnerAngle, Time.deltaTime * transitionSpeed);
 
-        if (isAttackMode)
+        if (isAttackMode && !isCooldown)
         {
             CheckForGhostHit();
         }
@@ -76,6 +79,7 @@ public class FlashlightController : MonoBehaviour
             {
                 Debug.Log("Ghost hit by flashlight!");
 
+                LightHitEvent?.Invoke(hit.collider.transform);
                 StartCoroutine(AttackEffectCoroutine());
             }
         }
@@ -83,19 +87,20 @@ public class FlashlightController : MonoBehaviour
 
     IEnumerator AttackEffectCoroutine()
     {
-        isCooldown = true; // 쿨다운 시작
+        isCooldown = true;
 
-        for (int i = 0; i < 2; i++) // 두 번 깜박임 효과를 반복
-        {
-            targetOuterAngle = attackOuterAngle; // outer angle을 넓게 설정
-            yield return new WaitForSeconds(attackEffectDuration); // 공격 효과 유지 시간 대기
+        targetOuterAngle = attackOuterAngle;
+        yield return new WaitForSeconds(attackEffectDuration);
 
-            targetOuterAngle = narrowOuterAngle; // 다시 원래 크기로 복구
-            yield return new WaitForSeconds(attackEffectDuration); // 공격 효과 유지 시간 대기
-        }
+        targetOuterAngle = narrowOuterAngle;
+        yield return new WaitForSeconds(attackEffectDuration);
 
-        yield return new WaitForSeconds(cooldownTime); // 쿨다운 시간 대기
+        targetOuterAngle = wideOuterAngle;
+        targetInnerAngle = wideInnerAngle;
+        isAttackMode = false;
 
-        isCooldown = false; // 쿨다운 해제
+        yield return new WaitForSeconds(cooldownTime);
+
+        isCooldown = false;
     }
 }

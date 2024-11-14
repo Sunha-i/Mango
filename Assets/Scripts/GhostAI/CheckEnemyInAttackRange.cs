@@ -19,7 +19,7 @@ public class CheckEnemyInAttackRange : Node
 
     public override NodeState Evaluate()
     {
-        object t = GetData("target");
+        object t = parent.parent.GetData("target");
         if (t == null)
         {
             state = NodeState.FAILURE;

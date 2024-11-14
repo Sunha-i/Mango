@@ -4,6 +4,7 @@ using BehaviorTree;
 public class GhostBT : Tree
 {
     public UnityEngine.Transform[] waypoints;
+    public FlashlightController flashlightController;
 
     public static float speed = 3f;
     public static float fovRange = 6f;
@@ -13,6 +14,11 @@ public class GhostBT : Tree
     {
         Node root = new Selector(new List<Node>
         {
+            new Sequence(new List<Node>
+            {
+                new CheckFlashlightHitsHead(transform, flashlightController),
+                new StunByFlashLight(transform),
+            }),
             new Sequence(new List<Node>
             {
                 new CheckEnemyInAttackRange(transform),
