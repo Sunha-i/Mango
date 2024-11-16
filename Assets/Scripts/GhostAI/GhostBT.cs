@@ -27,6 +27,7 @@ public class GhostBT : Tree
             new Sequence(new List<Node>
             {
                 new CheckEnemyInFOVRange(transform),
+                new CheckIfTargetOutOfRange(transform, fovRange),
                 new TaskGoToTarget(transform),
             }),
             new TaskPatrol(transform, waypoints),

@@ -34,6 +34,16 @@ public class CheckEnemyInFOVRange : Node
             return state;
         }
 
+        //Transform target = t as Transform;
+        //float distanceToTarget = Vector3.Distance(_transform.position, target.position);
+        //if (distanceToTarget > GhostBT.fovRange * 1.5f)
+        //{
+        //    ClearData("target");
+        //    _animator.SetBool("Flying", false);
+        //    state = NodeState.FAILURE;
+        //    return state;
+        //}
+
         state = NodeState.SUCCESS;
         return state;
     }

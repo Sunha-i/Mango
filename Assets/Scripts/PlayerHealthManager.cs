@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.SceneManagement; // 씬 전환을 위한 네임스페이스 추가
 
 public class PlayerHealthManager : MonoBehaviour
 {
     private int _healthpoints;
+
+    private EndingDivideCollector itemCollector;
 
     private void Awake()
     {
@@ -19,7 +22,9 @@ public class PlayerHealthManager : MonoBehaviour
 
     private void _Die()
     {
-        Destroy(gameObject);
         Debug.Log("Player Died ~ !");
+
+        itemCollector = GetComponent<EndingDivideCollector>();
+        itemCollector?.OnDoorClicked();
     }
 }
